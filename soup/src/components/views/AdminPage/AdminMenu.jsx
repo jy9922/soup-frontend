@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import "../../../css/AdminPage.css";
-
+// Admin입니다.
 function AdminMenu() {
     return (
         <div className="AdminMenu">
