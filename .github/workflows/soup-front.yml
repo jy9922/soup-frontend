@@ -35,3 +35,24 @@ jobs:
         file: ./soup/Dockerfile
         push: true
         tags: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+
+    - name: Move Repository
+      uses: actions/checkout@master
+      with:
+        repository: jy9922/manifest
+        token: ${{ secrets.ACTION_TOKEN }}
+        path: manifest
+
+    - name: Edit Manifest Image
+      run: |
+        cd manifest
+        dir
+        sed -i "23 c\        image: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}" soup-frontend.yaml
+        git config --global user.email "myjjy6190@gmail.com"
+        git config --global user.name "jy_9922"
+        git add .
+        git commit -m "Edit back image"
+        git push -f --set-upstream origin main
+
+
+  
